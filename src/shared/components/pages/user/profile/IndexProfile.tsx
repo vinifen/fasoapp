@@ -1,5 +1,5 @@
 import { View, FlatList } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Post } from 'shared/components/ui';
 import postModel from 'shared/model/postModel';
 import { PostRecordType } from 'shared/types/PostTypes';
@@ -7,6 +7,7 @@ import useTheme from 'shared/hooks/useTheme';
 import i18n from 'shared/i18n';
 import UserProfileContainer from './UserProfileContainer';
 import { baseURL } from 'src/api/api';
+import { useFocusEffect } from 'expo-router';
 
 type IndexProfileProps = {
   userId: string;
@@ -17,14 +18,15 @@ export default function IndexProfile({ userId }: IndexProfileProps) {
   const { theme } = useTheme();
   const { t } = i18n;
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res: PostRecordType[] = await postModel.selectAllFrom('user_id', userId);
-      setResult(res);
-    };
-    fetchPosts();
-  }, [userId]);
-
+  useFocusEffect(
+    useCallback(() => {
+      const fetchPosts = async () => {
+        const res: PostRecordType[] = await postModel.selectAllFrom('user_id', userId);
+        setResult(res);
+      };
+      fetchPosts();
+    }, [userId])
+  );
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
       <FlatList
