@@ -37,6 +37,20 @@ const postModel = {
       console.error("Error in selectAllFrom:", error);
       throw new Error("Request failed");
     }
+  },
+
+  delete: async (id: string, token: string): Promise<void> => {
+    try {
+      console.log("model post: " , id)
+      await api.delete(`/api/collections/posts/records/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error: any) {
+      console.error("Error in delete:", error);
+      throw new Error(i18n.t("unexpected_error"));
+    }
   }
 };
 

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import userModel from "shared/model/userModel";
 import { LoginType, RegisterUserType, UserRecordType } from "shared/types/UserTypes";

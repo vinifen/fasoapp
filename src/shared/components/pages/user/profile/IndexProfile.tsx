@@ -38,6 +38,7 @@ export default function IndexProfile({ userId }: IndexProfileProps) {
         renderItem={({ item }) => (
           <Post
             style={{ marginBottom: 10 }}
+            id={item.id}
             title={item.title}
             description={item.description ?? ''}
             username={item.username ?? ''}

@@ -12,6 +12,7 @@ import EditPostButton from './EditPostButton';
 
 type PostProps = {
   style?: StyleProp<ViewStyle>;
+  id: string;
   title: string;
   description: string;
   username: string;
@@ -24,6 +25,7 @@ type PostProps = {
 
 export default function Post({ 
   style, 
+  id,
   title, 
   description, 
   username, 
@@ -57,7 +59,7 @@ export default function Post({
         <Flex justify="flex-end" direction='row' style={{ marginVertical: 2}}>
           <Flex justify='space-between' direction='row' gap={54} style={{ marginRight: 8}}>
             <EditPostButton></EditPostButton>
-            <DeletePostButton></DeletePostButton>
+            <DeletePostButton postId={id}></DeletePostButton>
           </Flex>
         </Flex>
       )}

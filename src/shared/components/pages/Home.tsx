@@ -29,6 +29,7 @@ export default function Home() {
         style={{ paddingHorizontal: 10 }}
         renderItem={({ item }) => (
           <Post
+            id={item.id}
             style={{ marginTop: 10 }}
             title={item.title}
             description={item.description ?? ""}
