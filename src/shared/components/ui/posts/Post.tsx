@@ -1,11 +1,14 @@
 import React from 'react';
-import { ImageSourcePropType, StyleProp, View, ViewStyle, Text } from 'react-native';
+import { ImageSourcePropType, StyleProp, View, ViewStyle, Text} from 'react-native';
 import useTheme from 'shared/hooks/useTheme';
 import { H4 } from '../Titles';
 import Flex from '../Flex';
 import CommentButton from './CommentButton';
 import LikeButton from './LikeButton';
 import ImageLayout from './ImageLayout';
+import { useSegments } from 'expo-router';
+import DeletePostButton from './DeletePostButton';
+import EditPostButton from './EditPostButton';
 
 type PostProps = {
   style?: StyleProp<ViewStyle>;
@@ -31,7 +34,7 @@ export default function Post({
   commentsCount,
 }: PostProps) {
   const { theme } = useTheme();
-
+  const segments = useSegments();
   return (
     <View
       style={[
@@ -50,6 +53,14 @@ export default function Post({
         },
       ]}
     >
+      {segments.includes("profile") && (
+        <Flex justify="flex-end" direction='row' style={{ marginVertical: 2}}>
+          <Flex justify='space-between' direction='row' gap={54} style={{ marginRight: 8}}>
+            <EditPostButton></EditPostButton>
+            <DeletePostButton></DeletePostButton>
+          </Flex>
+        </Flex>
+      )}
       <ImageLayout imageSource={imageSource}></ImageLayout>
       
       <Flex style={{ marginHorizontal: 5, marginTop: 5 }}>

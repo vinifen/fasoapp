@@ -2,7 +2,7 @@ import { View, FlatList } from "react-native";
 import React, { useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import useTheme from "shared/hooks/useTheme";
-import Post from "../ui/posts/Post";
+import { Post } from "shared/components/ui";
 import postModel from "shared/model/postModel";
 import { PostRecordType } from "shared/types/PostTypes";
 import { baseURL } from "src/api/api";
