@@ -17,16 +17,17 @@ type imageInput = {
 }
 
 export default function ImageInput({onChangeImage, onChangeErrors, defaultImageData}: imageInput) {
+
+  const defaultImageUri = defaultImageData?.id && defaultImageData.image ?
+    `${baseURL}api/files/posts/${defaultImageData.id}/${defaultImageData.image}`
+    : null;
   const {t} = i18n;
   const {theme} = useTheme();
-  const [imageUri, setImageUri] = useState<string | null | undefined>(
-    `${baseURL}api/files/posts/${defaultImageData?.id}/${defaultImageData?.image}`
-  );
+  const [imageUri, setImageUri] = useState<string | null >(defaultImageUri);
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
   const { width } = useWindowDimensions();
   const [errors, setErrors] = useState<string | null>(null);
 
-  useEffect(() => {console.log(imageUri)},[imageUri])
 
   const pickImage = async () => {
     errorsSetter(null);

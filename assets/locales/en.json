@@ -61,6 +61,9 @@
 
   "my_posts": "My Posts",
   "since": "Since",
-  "invalid_image": "Invalid image."
+  "invalid_image": "Invalid image.",
+
+  "edit_this_post": "Edit this post",
+  "edit_post": "Edit Post"
 
 }

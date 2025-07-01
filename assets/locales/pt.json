@@ -61,5 +61,8 @@
 
   "my_posts": "Meus Posts",
   "since": "Desde",
-  "invalid_image": "Imagem invalida."
+  "invalid_image": "Imagem invalida.",
+
+  "edit_this_post": "Editar este post",
+  "edit_post": "Editar Post"
 }

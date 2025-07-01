@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -28,11 +28,23 @@ export default function EditPostForm({currentlyData}: EditPostForm) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm<CreatePostType>({
     resolver: zodResolver(getCreatePostSchema()),
     mode: "onChange"
   })
+
+  useEffect(() => {
+    if (currentlyData) {
+      reset({
+        title: currentlyData.title,
+        description: currentlyData.description,
+        user_id: user?.id,
+        image: null
+      });
+    }
+  }, [currentlyData, reset, user?.id]);
   
   const [imageData, setImageData] = useState<NewImageType | null>(null);
   const [imageErrors, setImageErrors] = useState<string | null>(null);
@@ -49,7 +61,7 @@ export default function EditPostForm({currentlyData}: EditPostForm) {
       const token = await AsyncStorage.getItem("auth_token");
       if (!token) return;
       const postFormData = toFormData(newPostData);
-      await postModel.create(postFormData, token);
+      await postModel.update(currentlyData.id, postFormData, token);
       
       router.push('');
     } catch (error: any) {
@@ -84,12 +96,14 @@ export default function EditPostForm({currentlyData}: EditPostForm) {
 
     if (postData.image) {
       const newImageUri =  "file:///" + postData.image.uri.split("file:/").join("");
-
+      
       formData.append('image', {
         uri : newImageUri,
         type: mime.getType(newImageUri),
         name: newImageUri.split("/").pop()
       });
+    } else {
+      formData.append('image', '');
     }
     
     return formData;
@@ -101,7 +115,6 @@ export default function EditPostForm({currentlyData}: EditPostForm) {
       <FormInput
         control={control}
         inputName="title"
-        value={currentlyData.title}
         errors={errors}
         placeholder={t("post_title")}
         textAlign='left'
@@ -111,7 +124,6 @@ export default function EditPostForm({currentlyData}: EditPostForm) {
       <FormInput
         control={control}
         inputName="description"
-        value={currentlyData.description}
         minHeight={100}
         errors={errors}
         placeholder={t("post_description")}
@@ -128,7 +140,7 @@ export default function EditPostForm({currentlyData}: EditPostForm) {
       />
       
       <SubmitButton
-        title={t('create_posts')}
+        title={t('edit_post')}
         isDisabled={!isValid || imageErrors !== null}
         onPress={handleSubmit((data) =>
           handleEditPost({
