@@ -64,5 +64,9 @@
   "invalid_image": "Imagem invalida.",
 
   "edit_this_post": "Editar este post",
-  "edit_post": "Editar Post"
+  "edit_post": "Editar Post",
+  "cancel": "Cancelar",
+  "delete_post": "Excluir post",
+  "delete_post_confirmation_title": "Tem certeza que deseja excluir este post?",
+  "delete_post_confirmation_message": "Esta ação não pode ser desfeita."
 }

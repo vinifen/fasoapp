@@ -64,6 +64,10 @@
   "invalid_image": "Invalid image.",
 
   "edit_this_post": "Edit this post",
-  "edit_post": "Edit Post"
+  "edit_post": "Edit Post",
+  "cancel": "Cancel",
+  "delete_post": "Delete post",
+  "delete_post_confirmation_title": "Are you sure you want to delete this post?",
+  "delete_post_confirmation_message": "This action cannot be undone."
 
 }

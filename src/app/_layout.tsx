@@ -11,11 +11,14 @@ import { H1 } from 'shared/components/ui/Titles';
 import ThemeProvider from 'shared/context/ThemeProvider';
 import useTheme from 'shared/hooks/useTheme';
 import useUser from 'shared/hooks/useUser';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 export default function _layout() {
   return (
     <ThemeProvider>
-      <Content />
+      <ActionSheetProvider>
+        <Content />
+      </ActionSheetProvider>
     </ThemeProvider>
   );
 }

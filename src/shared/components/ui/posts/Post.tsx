@@ -61,7 +61,7 @@ export default function Post({
         <Flex justify="flex-end" direction='row' style={{ marginVertical: 2}}>
           <Flex justify='space-between' direction='row' gap={54} style={{ marginRight: 8}}>
             <EditPostButton postId={id} userId={userId}></EditPostButton>
-            <DeletePostButton postId={id}></DeletePostButton>
+            <DeletePostButton postId={id} userId={userId}></DeletePostButton>
           </Flex>
         </Flex>
       )}
