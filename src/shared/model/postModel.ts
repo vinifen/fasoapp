@@ -18,6 +18,21 @@ const postModel = {
     }
   },
 
+  update: async (id: string, postData: FormData, token: string): Promise<PostRecordType> => {
+    try {
+      const response = await api.patch(`/api/collections/posts/records/${id}`, postData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error: any) {
+      console.error("Error in update:", error);
+      throw new Error(i18n.t("unexpected_error"));
+    }
+  },
+
   selectAll: async (): Promise<PostRecordType[]> => {
     try {
       const response = await api.get('/api/collections/posts/records');

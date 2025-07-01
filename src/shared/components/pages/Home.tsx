@@ -30,6 +30,7 @@ export default function Home() {
         renderItem={({ item }) => (
           <Post
             id={item.id}
+            userId={item.user_id}
             style={{ marginTop: 10 }}
             title={item.title}
             description={item.description ?? ""}

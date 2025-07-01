@@ -21,6 +21,7 @@ type PostProps = {
   isCommented: boolean;
   likesCount: string;
   commentsCount: string;
+  userId: string;
 };
 
 export default function Post({ 
@@ -34,6 +35,7 @@ export default function Post({
   isCommented,
   likesCount,
   commentsCount,
+  userId,
 }: PostProps) {
   const { theme } = useTheme();
   const segments = useSegments();
@@ -58,7 +60,7 @@ export default function Post({
       {segments.includes("profile") && (
         <Flex justify="flex-end" direction='row' style={{ marginVertical: 2}}>
           <Flex justify='space-between' direction='row' gap={54} style={{ marginRight: 8}}>
-            <EditPostButton></EditPostButton>
+            <EditPostButton postId={id} userId={userId}></EditPostButton>
             <DeletePostButton postId={id}></DeletePostButton>
           </Flex>
         </Flex>

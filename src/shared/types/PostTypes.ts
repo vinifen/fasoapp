@@ -22,4 +22,3 @@ export type PostRecordType = {
   is_commented?: boolean;
   username?: string;
 };
-  

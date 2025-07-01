@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Flex, FormInput, SubmitButton } from 'shared/components/ui';
 import useTheme from 'shared/hooks/useTheme';
 import { getCreatePostSchema } from 'shared/schemas/postSchemas';
-import { CreatePostType } from 'shared/types/PostTypes';
+import { CreatePostType, PostRecordType } from 'shared/types/PostTypes';
 import { ImageInput } from 'shared/components/ui';
 import { useRouter } from 'expo-router';
 import postModel from 'shared/model/postModel';
@@ -16,7 +16,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import mime from "mime";
 import validationStyles from 'shared/styles/validationStyles';
 
-export default function CreatePostForm() {
+type EditPostForm = {
+  currentlyData: PostRecordType,
+}
+
+export default function EditPostForm({currentlyData}: EditPostForm) {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
@@ -34,7 +38,7 @@ export default function CreatePostForm() {
   const [imageErrors, setImageErrors] = useState<string | null>(null);
   const [error, setError] = useState('');
   
-  async function handleCreatePost(newPostData: CreatePostType) {
+  async function handleEditPost(newPostData: CreatePostType) {
     try {
       console.log(newPostData)
       if(imageErrors){
@@ -82,9 +86,9 @@ export default function CreatePostForm() {
       const newImageUri =  "file:///" + postData.image.uri.split("file:/").join("");
 
       formData.append('image', {
-      uri : newImageUri,
-      type: mime.getType(newImageUri),
-      name: newImageUri.split("/").pop()
+        uri : newImageUri,
+        type: mime.getType(newImageUri),
+        name: newImageUri.split("/").pop()
       });
     }
     
@@ -97,6 +101,7 @@ export default function CreatePostForm() {
       <FormInput
         control={control}
         inputName="title"
+        value={currentlyData.title}
         errors={errors}
         placeholder={t("post_title")}
         textAlign='left'
@@ -106,6 +111,7 @@ export default function CreatePostForm() {
       <FormInput
         control={control}
         inputName="description"
+        value={currentlyData.description}
         minHeight={100}
         errors={errors}
         placeholder={t("post_description")}
@@ -115,17 +121,21 @@ export default function CreatePostForm() {
         numberOfLines={10}
       />
       
-      <ImageInput onChangeImage={setImageData} onChangeErrors={setImageErrors}></ImageInput>
+      <ImageInput 
+        onChangeImage={setImageData} 
+        onChangeErrors={setImageErrors} 
+        defaultImageData={{ id: currentlyData.id, image: currentlyData.image }}
+      />
       
       <SubmitButton
         title={t('create_posts')}
         isDisabled={!isValid || imageErrors !== null}
         onPress={handleSubmit((data) =>
-          handleCreatePost({
+          handleEditPost({
             title: data.title,
             description: data.description,
             user_id: user?.id,
-            image: imageData 
+            image: imageData,
           })
         )}
       />

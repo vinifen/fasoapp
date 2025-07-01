@@ -8,19 +8,25 @@ import { getInfoAsync } from 'expo-file-system';
 import validationStyles from 'shared/styles/validationStyles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NewImageType } from 'shared/types/ImageTypes';
+import { baseURL } from 'src/api/api';
 
 type imageInput = {
   onChangeImage: (uri: NewImageType | null) => void;
   onChangeErrors: (err: string | null) => void;
+  defaultImageData?: { id: string, image: string | undefined}
 }
 
-export default function ImageInput({onChangeImage, onChangeErrors}: imageInput) {
+export default function ImageInput({onChangeImage, onChangeErrors, defaultImageData}: imageInput) {
   const {t} = i18n;
   const {theme} = useTheme();
-  const [imageUri, setImageUri] = useState<string | null>(null);
+  const [imageUri, setImageUri] = useState<string | null | undefined>(
+    `${baseURL}api/files/posts/${defaultImageData?.id}/${defaultImageData?.image}`
+  );
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
   const { width } = useWindowDimensions();
   const [errors, setErrors] = useState<string | null>(null);
+
+  useEffect(() => {console.log(imageUri)},[imageUri])
 
   const pickImage = async () => {
     errorsSetter(null);
